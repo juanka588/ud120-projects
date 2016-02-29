@@ -1,6 +1,8 @@
 #!/usr/bin/python
 
 import matplotlib.pyplot as plt
+from nltk.chunk.util import accuracy
+
 from prep_terrain_data import makeTerrainData
 from class_vis import prettyPicture
 
@@ -32,13 +34,19 @@ plt.show()
 ### visualization code (prettyPicture) to show you the decision boundary
 
 
+from sklearn.naive_bayes import GaussianNB
+from sklearn import svm
+from sklearn.metrics import accuracy_score
+clf=svm.SVC(kernel='linear')
 
+clf.fit(features_train,labels_train)
+pred = clf.predict(features_test)
 
-
-
-
+accuracy = accuracy_score(labels_test,pred)
+print "accuracy ", accuracy
 
 try:
     prettyPicture(clf, features_test, labels_test)
 except NameError:
+    print(NameError)
     pass
