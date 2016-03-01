@@ -6,6 +6,8 @@ from nltk.chunk.util import accuracy
 from prep_terrain_data import makeTerrainData
 from class_vis import prettyPicture
 
+import sys
+from time import time
 features_train, labels_train, features_test, labels_test = makeTerrainData()
 
 
@@ -35,18 +37,36 @@ plt.show()
 
 
 from sklearn.naive_bayes import GaussianNB
+from sklearn import tree
 from sklearn import svm
+from sklearn.neighbors import KNeighborsClassifier
 from sklearn.metrics import accuracy_score
-clf=svm.SVC(kernel='linear')
+from sklearn.ensemble import RandomForestClassifier, AdaBoostClassifier
 
-clf.fit(features_train,labels_train)
-pred = clf.predict(features_test)
+names = ["Random Forest", "AdaBoost", "Naive Bayes", "Decision Tree","Linear SVM","Nearest Neighbors"]
 
-accuracy = accuracy_score(labels_test,pred)
-print "accuracy ", accuracy
+classifiers=[
+    RandomForestClassifier(max_depth=5, n_estimators=10, max_features=1),
+    AdaBoostClassifier(),
+    GaussianNB(),
+    tree.DecisionTreeClassifier(min_samples_split=40),
+    svm.SVC(kernel='linear'),
+    KNeighborsClassifier(n_neighbors=3)
+]
 
-try:
-    prettyPicture(clf, features_test, labels_test)
-except NameError:
-    print(NameError)
-    pass
+for name, clf in zip(names, classifiers):
+    print name
+    t0 = time()
+    clf.fit(features_train,labels_train)
+    print "training time: ", round(time()-t0, 3), "s"
+    t0 = time()
+    pred = clf.predict(features_test)
+    print "prediction time:", round(time()-t0, 3), "s"
+    acc = accuracy_score(labels_test,pred)
+    print "accuracy ", acc
+    print " "
+    try:
+        prettyPicture(clf, features_test, labels_test)
+    except NameError:
+        print(NameError)
+        pass
