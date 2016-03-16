@@ -46,11 +46,11 @@ from sklearn.ensemble import RandomForestClassifier, AdaBoostClassifier
 names = ["Random Forest", "AdaBoost", "Naive Bayes", "Decision Tree","Linear SVM","Nearest Neighbors"]
 
 classifiers=[
-    RandomForestClassifier(max_depth=5, n_estimators=10, max_features=1),
-    AdaBoostClassifier(),
+    RandomForestClassifier(max_depth=10, n_estimators=10, max_features=1),
+    AdaBoostClassifier(n_estimators=10),
     GaussianNB(),
     tree.DecisionTreeClassifier(min_samples_split=40),
-    svm.SVC(kernel='linear'),
+    svm.SVC(),
     KNeighborsClassifier(n_neighbors=3)
 ]
 
