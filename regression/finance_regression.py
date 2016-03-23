@@ -70,6 +70,12 @@ try:
 except NameError:
     pass
 plt.xlabel(features_list[1])
+reg.fit(feature_test, target_test)
+plt.plot(feature_train, reg.predict(feature_train), color="b")
+print "slope ",reg.coef_
+print "intercept ",reg.intercept_
+print "score on training ",reg.score(feature_train,target_train)
+print "score on test ",reg.score(feature_test,target_test)
 plt.ylabel(features_list[0])
 plt.legend()
 plt.show()
