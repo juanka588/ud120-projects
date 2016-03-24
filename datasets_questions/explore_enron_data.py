@@ -23,6 +23,8 @@ print enron_data
 count=0
 hasSalary=0
 hasEmail=0
+maxStock=-float('Inf')
+minStock=float('Inf')
 for person in enron_data:
     print(person,enron_data[person]["email_address"])
     if(enron_data[person]["poi"]==1):
@@ -34,6 +36,15 @@ for person in enron_data:
     if(enron_data[person]["email_address"]!="NaN"):
         hasEmail=hasEmail+1
 
+    val=enron_data[person]["exercised_stock_options"]
+    if(val!="NaN"):
+        if(val>maxStock):
+            maxStock=val
+        else :
+            if(val < minStock):
+                minStock=val
+
+
 
 print ("poi ",count)
 print ("stock value of PRENTICE JAMES",enron_data["PRENTICE JAMES"]["total_stock_value"])
@@ -43,3 +54,5 @@ print ("payments of SKILLING JEFFREY K",enron_data["SKILLING JEFFREY K"]["total_
 print ("payments of LAY KENNETH L",enron_data["LAY KENNETH L"]["total_payments"])
 print ("payments of FASTOW ANDREW S",enron_data["FASTOW ANDREW S"]["total_payments"])
 print ("Person with emails: ",hasEmail," Persons with Salary: ",hasSalary)
+
+print ("maxStockoptions: ",maxStock," minStockoptions: ",minStock)
