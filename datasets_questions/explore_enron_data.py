@@ -18,13 +18,14 @@
 import pickle
 enron_data = pickle.load(open("../final_project/final_project_dataset.pkl", "r"))
 
-print ("total persons ",len(enron_data))
+
 print enron_data
 count=0
 hasSalary=0
 hasEmail=0
 maxStock=-float('Inf')
 minStock=float('Inf')
+countNaNTotalPayements=0
 for person in enron_data:
     print(person,enron_data[person]["email_address"])
     if(enron_data[person]["poi"]==1):
@@ -36,6 +37,11 @@ for person in enron_data:
     if(enron_data[person]["email_address"]!="NaN"):
         hasEmail=hasEmail+1
 
+
+    val=enron_data[person]["total_payments"]
+    if(val!="NaN"):
+        countNaNTotalPayements=countNaNTotalPayements+1
+
     val=enron_data[person]["exercised_stock_options"]
     if(val!="NaN"):
         if(val>maxStock):
@@ -45,7 +51,7 @@ for person in enron_data:
                 minStock=val
 
 
-
+print ("total persons ",len(enron_data))
 print ("poi ",count)
 print ("stock value of PRENTICE JAMES",enron_data["PRENTICE JAMES"]["total_stock_value"])
 print ("from_message to poi's of COLWELL WESLEY",enron_data["COLWELL WESLEY"]["from_this_person_to_poi"])
@@ -56,3 +62,4 @@ print ("payments of FASTOW ANDREW S",enron_data["FASTOW ANDREW S"]["total_paymen
 print ("Person with emails: ",hasEmail," Persons with Salary: ",hasSalary)
 
 print ("maxStockoptions: ",maxStock," minStockoptions: ",minStock)
+print ("NaN total Payments POI percentage",countNaNTotalPayements)
