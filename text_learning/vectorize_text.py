@@ -48,18 +48,26 @@ for name, from_person in [("sara", from_sara), ("chris", from_chris)]:
             email = open(path, "r")
 
             ### use parseOutText to extract the text from the opened email
-
+            words=parseOutText(email)
             ### use str.replace() to remove any instances of the words
-            ### ["sara", "shackleton", "chris", "germani"]
-
+            banned= ["sara", "shackleton", "chris", "germani"]
+            for b in banned:
+                words=words.replace(b,"")
             ### append the text to word_data
+            print words
+            word_data.append(words)
+            #for w in words.split():
+            #    word_data.append(w)
 
             ### append a 0 to from_data if email is from Sara, and 1 if email is from Chris
-
-
+            if name=="sara":
+                from_data.append(0)
+            if name=="chris":
+                from_data.append(1)
             email.close()
 
 print "emails processed"
+print "word_data[152]",word_data[152]
 from_sara.close()
 from_chris.close()
 
@@ -71,5 +79,7 @@ pickle.dump( from_data, open("your_email_authors.pkl", "w") )
 
 
 ### in Part 4, do TfIdf vectorization here
-
+from nltk.corpus import stopwords
+from sklearn.feature_extraction.text import TfidfVectorizer
+sw=stopwords.words("english")
 

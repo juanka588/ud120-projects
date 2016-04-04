@@ -26,10 +26,14 @@ hasEmail=0
 maxStock=-float('Inf')
 minStock=float('Inf')
 countNaNTotalPayements=0
+countNaNTotalPayementsPOI=0
 for person in enron_data:
     print(person,enron_data[person]["email_address"])
     if(enron_data[person]["poi"]==1):
         count=count+1
+        val=enron_data[person]["total_payments"]
+        if(val=="NaN"):
+            countNaNTotalPayementsPOI=countNaNTotalPayementsPOI+1
 
     if(enron_data[person]["salary"]!="NaN"):
         hasSalary=hasSalary+1
@@ -39,7 +43,7 @@ for person in enron_data:
 
 
     val=enron_data[person]["total_payments"]
-    if(val!="NaN"):
+    if(val=="NaN"):
         countNaNTotalPayements=countNaNTotalPayements+1
 
     val=enron_data[person]["exercised_stock_options"]
@@ -62,4 +66,5 @@ print ("payments of FASTOW ANDREW S",enron_data["FASTOW ANDREW S"]["total_paymen
 print ("Person with emails: ",hasEmail," Persons with Salary: ",hasSalary)
 
 print ("maxStockoptions: ",maxStock," minStockoptions: ",minStock)
-print ("NaN total Payments POI percentage",countNaNTotalPayements)
+print ("NaN total Payments percentage",countNaNTotalPayements)
+print ("NaN total Payments POI percentage",countNaNTotalPayementsPOI)
