@@ -41,7 +41,7 @@ for name, from_person in [("sara", from_sara), ("chris", from_chris)]:
     for path in from_person:
         ### only look at first 200 emails when developing
         ### once everything is working, remove this line to run over full dataset
-        temp_counter += 1
+        #temp_counter += 1
         if temp_counter < 200:
             path = os.path.join('..', path[:-1])
             print path
@@ -50,11 +50,10 @@ for name, from_person in [("sara", from_sara), ("chris", from_chris)]:
             ### use parseOutText to extract the text from the opened email
             words=parseOutText(email)
             ### use str.replace() to remove any instances of the words
-            banned= ["sara", "shackleton", "chris", "germani"]
+            banned= ["sara", "shackleton", "chris", "germani","sshacklensf","cgermannsf"]#,"houectect"]
             for b in banned:
                 words=words.replace(b,"")
             ### append the text to word_data
-            print words
             word_data.append(words)
             #for w in words.split():
             #    word_data.append(w)
@@ -82,4 +81,9 @@ pickle.dump( from_data, open("your_email_authors.pkl", "w") )
 from nltk.corpus import stopwords
 from sklearn.feature_extraction.text import TfidfVectorizer
 sw=stopwords.words("english")
-
+vectorizer= TfidfVectorizer(stop_words='english')
+bag_of_words=vectorizer.fit(word_data)
+bag_of_words=vectorizer.transform(word_data)
+print "words in data ",len(vectorizer.get_feature_names())
+print vectorizer.vocabulary_.get("calendar")
+print "word 34597 ",vectorizer.get_feature_names()[34597]

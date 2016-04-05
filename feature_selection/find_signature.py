@@ -39,5 +39,25 @@ labels_train   = labels_train[:150]
 
 ### your code goes here
 
+from sklearn import tree
+from sklearn.metrics import accuracy_score
 
+print "features in data ",len(features_train[0])
+clf=tree.DecisionTreeClassifier()
+clf.fit(features_train,labels_train)
+pred = clf.predict(features_test)
 
+acc = accuracy_score(labels_test,pred)
+
+print "accuracy ", acc
+maxVal=max(clf.feature_importances_)
+i=0
+idx=0
+print "max importance ",maxVal
+for importance in  clf.feature_importances_:
+    if importance>=0.2:
+        idx=i
+        print "idx", i
+    i=i+1
+
+print "powerfull word ",vectorizer.get_feature_names()[idx]
